@@ -8,16 +8,16 @@
     </display-digit>
     <div class="flex-auto">.</div>
     <display-digit class="flex-auto"
-      :current="minor(version)"
-      :min="minor(min)"
-      :max="minor(max)"
+      :current="minor('current')"
+      :min="minor('min')"
+      :max="minor('max')"
     >
     </display-digit>
     <div class="flex-auto">.</div>
     <display-digit class="flex-auto"
-      :current="patch(version)"
-      :min="patch(min)"
-      :max="patch(max)"
+      :current="patch('current')"
+      :min="patch('min')"
+      :max="patch('max')"
     >
     </display-digit>
     <div class="flex-auto" v-if="hasPre">.</div>
@@ -74,11 +74,39 @@ export default {
     major (version) {
       return version ? version.major : null
     },
-    minor (version) {
-      return version ? version.minor : null
+    minor (type) {
+      switch (type) {
+        case 'current':
+          return this.version.minor
+
+        case 'min':
+          return this.min.minor
+
+        case 'max':
+          if (this.max && this.max.major > this.version.major) {
+            return +Infinity
+          }
+
+          return this.max.minor
+      }
     },
-    patch (version) {
-      return version ? version.patch : null
+    patch (type) {
+      switch (type) {
+        case 'current':
+          return this.version.patch
+
+        case 'min':
+          return this.min.patch
+
+        case 'max':
+          if (this.max &&
+          (this.max.major > this.version.major ||
+          this.max.minor > this.version.minor)) {
+            return +Infinity
+          }
+
+          return this.max.patch
+      }
     }
   }
 }

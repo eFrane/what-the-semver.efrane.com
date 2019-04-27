@@ -1,7 +1,7 @@
 <template>
   <div class="px-4 container relative text-center">
     {{ current }}
-    <small class="absolute pin-t pin-r text-xs text-grey-darkest" v-if="hasMax">&#8804; {{ max }}</small>
+    <small class="absolute pin-t pin-r text-xs text-grey-darkest" v-if="hasMax">&#8804; {{ formattedMax }}</small>
     <small class="absolute pin-b pin-r text-xs text-grey-darkest" v-if="hasMin">&#8805; {{ min }}</small>
   </div>
 </template>
@@ -36,6 +36,9 @@ export default {
     },
     hasMin () {
       return this.min !== null && this.min < this.current
+    },
+    formattedMax () {
+      return this.max === +Infinity ? '∞' : this.max
     }
   }
 }
