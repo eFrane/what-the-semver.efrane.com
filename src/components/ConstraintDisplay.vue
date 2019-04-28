@@ -80,14 +80,14 @@ export default {
           return this.version.minor
 
         case 'min':
-          return this.min.minor
+          return this.min ? this.min.minor : null
 
         case 'max':
           if (this.max && this.max.major > this.version.major) {
             return +Infinity
           }
 
-          return this.max.minor
+          return this.max ? this.max.minor : null
       }
     },
     patch (type) {
@@ -96,7 +96,7 @@ export default {
           return this.version.patch
 
         case 'min':
-          return this.min.patch
+          return this.min ? this.min.patch : null
 
         case 'max':
           if (this.max &&
@@ -105,7 +105,7 @@ export default {
             return +Infinity
           }
 
-          return this.max.patch
+          return this.max ? this.max.patch : null
       }
     }
   }
