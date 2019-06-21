@@ -49,10 +49,10 @@ export default {
       return semver.coerce(this.constraintString)
     },
     pre () {
-      return this.version.prerelease
+      return semver.prerelease(this.constraintString, { includePrerelease: true })
     },
     hasPre () {
-      return this.version.prerelease.length > 0
+      return (this.pre || []).length > 0
     },
     min () {
       return semver.coerce(this.minmax()[0] || null)
